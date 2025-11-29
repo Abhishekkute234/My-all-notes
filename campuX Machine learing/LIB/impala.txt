@@ -1,0 +1,34 @@
+SHOW DATABASES;
+CREATE DATABASE sl3_impala;
+USE sl3_impala;
+
+CREATE TABLE employees (
+    id INT,
+    name STRING,
+    department STRING,
+    salary DOUBLE
+)
+STORED AS PARQUET;
+
+INSERT INTO employees VALUES
+(1, 'Aarav', 'Engineering', 95000),
+(2, 'Priya', 'Marketing', 72000),
+(3, 'Rohan', 'Finance', 85000),
+(4, 'Saanvi', 'Engineering', 98000),
+(5, 'Karthik', 'Engineering', 87000),
+(6, 'Neha', 'Marketing', 74000);
+
+SELECT * FROM employees WHERE department = 'Engineering';
+
+SELECT * FROM employees WHERE salary > 90000;
+
+SELECT department, AVG(salary) AS avg_salary FROM employees GROUP BY department;
+
+SELECT * FROM employees ORDER BY salary DESC LIMIT 3;
+
+SELECT e.name, e.department, e.salary FROM employees e
+JOIN ( SELECT department, AVG(salary) AS avg_salary FROM employees
+    GROUP BY department
+) dept_avg
+ON e.department = dept_avg.department
+WHERE e.salary < dept_avg.avg_salary;
