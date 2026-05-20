@@ -1,0 +1,26 @@
+# to create an  image 
+FROM node:20-alpine as frontend-builder
+COPY ./Frontend /app
+
+# work in the app directory
+WORKDIR /app
+RUN npm install
+
+# build the frontend
+RUN npm run build
+# copy the whole code or the environment 
+
+# RUn the command to install the dependencies
+RUN npm install
+
+
+# build the backend
+FROM node:20-alpine
+COPY ./Backend /app
+WORKDIR /app
+RUN npm install
+
+# COPY DIST FOLDER FROM FRONTEND BUILDER TO BACKEND PUBLIC FOLDER
+COPY --from=frontend-builder /app/dist /app/public
+# command to start server 
+CMD ["node","server.js"]
