@@ -102,4 +102,4 @@ A comprehensive guide and roadmap covering core concepts, architectural patterns
 | `Search engine` | `Notification system` | |
 
 ---
-*Click on any topic in your repository to link it to deep-dive files or notes!*
+
